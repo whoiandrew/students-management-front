@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useFetch } from "./useFetch";
-import { MainContext } from "../../App";
 import { useSelector } from "react-redux";
+import { URL, PORT_AUTH } from "../../constants";
 
 const Books = () => {
-  const url = "http://127.0.0.1:8080";
+  const url = URL + PORT_AUTH;
   useFetch(url + "/books");
-  const books = useSelector(state => state.books);
+  const books = useSelector((state) => state.books);
   console.log(typeof books);
-
 
   return (
     <>

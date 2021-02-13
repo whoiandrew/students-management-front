@@ -1,16 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import sendForm from "./sendAuthForm";
-import Loading from "./Loading";
+import Loader from "react-loader-spinner";
 import { Redirect } from "react-router-dom";
+import "../../index.css";
+import Error from "./Error";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { isFormValid } from "./formValidator";
+import { URL, PORT_AUTH } from "../../constants";
 
 const AuthForm = () => {
+  console.log("loadingauth");
   const { username, password } = useSelector((state) => state.auth);
-  const isLogged = useSelector((state) => state.isLogged);
+  const isLogged = useSelector((state) => state.login.isLogged);
+  const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
-  const url = "http://127.0.0.1:8080";
   const [loading, setLoading] = useState(false);
 
+  const url = URL + PORT_AUTH;
   const form = {
     method: "POST",
     headers: {
@@ -19,35 +26,63 @@ const AuthForm = () => {
     body: JSON.stringify({ username, password }),
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (isFormValid(username, password)) {
+      localStorage.setItem("username", username);
+      sendForm(dispatch, url + "/login", form, setLoading, setErrorMessage);
+    } else {
+      setErrorMessage("Input is not correct");
+    }
+  };
+
   return (
-    <>
+    <div className="container">
       {isLogged && <Redirect to="/" />}
-      <div>{loading && <Loading />}</div>
-      <div>{isLogged && <div>Logged IN</div>}</div>
-      <form>
-        <label htmlFor="username">Name</label>
-        <input
-          value={username}
-          onChange={(e) => {
-            dispatch({ type: "USERNAME", value: e.target.value });
-          }}
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          value={password}
-          onChange={(e) => {
-            dispatch({ type: "PASSWORD", value: e.target.value });
-          }}
-        />
-        <button
-          onClick={(e) => {
-            sendForm(e, dispatch, url + "/login", form, setLoading);
-          }}
-        >
-          Button
+      <form className="form">
+        <div className="inputField">
+          <label className="label" htmlFor="username">
+            Name:
+          </label>
+          <input
+            className="input"
+            value={username}
+            onChange={(e) => {
+              dispatch({ type: "USERNAME", value: e.target.value });
+            }}
+          />
+        </div>
+        <div className="inputField">
+          <label className="label" htmlFor="password">
+            Password:
+          </label>
+          <input
+            type="password"
+            className="input"
+            value={password}
+            onChange={(e) => {
+              dispatch({ type: "PASSWORD", value: e.target.value });
+            }}
+          />
+        </div>
+        <button className="submit-button" onClick={handleClick}>
+          Login
         </button>
+        <div className="error">
+          <span>{errorMessage && <Error errorMessage={errorMessage} />}</span>
+        </div>
       </form>
-    </>
+      <div className="loader">
+        {loading && (
+          <Loader
+            type="Puff"
+            color="rgba(96, 96, 96, 0.4)"
+            height={40}
+            width={40}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 

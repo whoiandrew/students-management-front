@@ -1,50 +1,44 @@
-import React, { useEffect } from "react";
-import "./App.css";
+import React from "react";
 import AuthForm from "./components/authForm/AuthForm";
 import Books from "./components/books/Books";
-import Main from "./components/authForm/main/Main";
+import Main from "./components/main/Main";
+import Schedule from "./components/schedule/Schedule";
+import NavBar from "./components/main/NavBar";
+import Register from "./components/register/Register";
+
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const URL = "http://127.0.0.1:8080";
-
-export const MainContext = React.createContext();
-
 function App() {
-  const isLogged = useSelector((state) => state.isLogged);
-  useEffect(() => {
-    localStorage.clear();
-  }, []);
+  const isLogged = useSelector((state) => state.login.isLogged);
+
   return (
-    <Router>
-      <Switch>
-        <Route
-          exact
-          path="/"
-          render={() => (isLogged ? <Main /> : <Redirect to="/login" />)}
-        />
-        <Route
-          path="/login"
-          render={() => (
-            <MainContext.Provider value={{ url: URL }}>
-              <AuthForm />
-            </MainContext.Provider>
-          )}
-        />
-        <Route
-          exact
-          path="/books"
-          render={() => (isLogged ? <Books /> : <Redirect to="/login" />)}
-        />
-        <Route path="*" render={() => <div>404 NOT FOUND</div>} />
-      </Switch>
-    </Router>
+    <>
+      <Router>
+        {isLogged && <NavBar />}
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (isLogged ? <Main /> : <Redirect to="/login" />)}
+          />
+          <Route path="/login" render={() => <AuthForm />} />
+          <Route
+            exact
+            path="/books"
+            render={() => (isLogged ? <Books /> : <Redirect to="/login" />)}
+          />
+          <Route path="/schedule" render={() => <Schedule />} />
+          <Route path="/register" render={() => <Register />} />
+          <Route path="*" render={() => <div>404 NOT FOUND</div>} />
+        </Switch>
+      </Router>
+    </>
   );
 }
 

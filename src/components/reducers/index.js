@@ -1,14 +1,14 @@
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 import { authReducer } from "./auth";
 import { booksReducer } from "./books";
-import {counterReducer} from "./counter";
-import {isLoggedReducer} from "./isLogged";
+import { loginReducer } from "./isLogged";
+import { registerReducer } from "./register";
 
 const allReducers = combineReducers({
-  counter: counterReducer,
-  isLogged: isLoggedReducer,
+  login: loginReducer,
   auth: authReducer,
-  books: booksReducer
-})
+  books: booksReducer,
+  register: registerReducer,
+});
 
 export default allReducers;
