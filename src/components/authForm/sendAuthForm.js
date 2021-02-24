@@ -5,17 +5,24 @@ const sendForm = async (dispatch, url, params, loadingHook, errorHook) => {
     const body = await res.json();
     loadingHook(false);
 
-    dispatch({ type: "NICKNAME", value: "" });
+    dispatch({ type: "USERNAME", value: "" });
     dispatch({ type: "PASSWORD", value: "" });
-
+  
     const currentToken = body.accessToken;
-    const errorMessage = body.errorMessage
+    const errorMessage = body.errorMessage;
+
     if (currentToken) {
       dispatch({ type: "LOG_IN" });
-      localStorage.setItem("accessToken", currentToken);
+      localStorage.setItem("accessToken", currentToken);  
+      localStorage.setItem("user", JSON.stringify(body.user));
+
     }
-    if (errorMessage) {
-      errorHook(errorMessage)
+    switch (errorMessage) {
+      case "Request path contains unescaped characters":
+        errorHook("Please, use latin letters only");
+        break;
+      default:
+        errorHook(errorMessage);
     }
   } catch (e) {
     console.log(e);

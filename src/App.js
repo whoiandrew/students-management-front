@@ -4,7 +4,9 @@ import Books from "./components/books/Books";
 import Main from "./components/main/Main";
 import Schedule from "./components/schedule/Schedule";
 import NavBar from "./components/main/NavBar";
+import Works from "./components/works/Works";
 import Register from "./components/register/Register";
+import Work from "./components/works/Work";
 
 import {
   BrowserRouter as Router,
@@ -33,9 +35,11 @@ function App() {
             path="/books"
             render={() => (isLogged ? <Books /> : <Redirect to="/login" />)}
           />
-          <Route path="/schedule" render={() => <Schedule />} />
-          <Route path="/register" render={() => <Register />} />
-          <Route path="*" render={() => <div>404 NOT FOUND</div>} />
+          <Route exact path="/schedule" render={() => <Schedule />} />
+          <Route exact path="/works/:lesson_name" render={() => <Work />} />
+          <Route exact path="/works" render={() => <Works />} />
+          <Route exact path="/register" render={() => <Register />} />
+          <Route exact path="*" render={() => <div>404 NOT FOUND</div>} />
         </Switch>
       </Router>
     </>

@@ -1,6 +1,6 @@
 import React from "react";
 import useFetch from "../customHooks/useFetch";
-import { Lesson } from "./Lesson";
+import { ScheduleItem } from "./ScheduleItem";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -13,6 +13,15 @@ const reducer = (state, action) => {
   }
 };
 
+const weekDaysUkr = [
+  "Понеділок",
+  "Вівторок",
+  "Середа",
+  "Четвер",
+  "П'ятниця",
+  "Субота",
+];
+
 const Schedule = () => {
   const url = "http://api.rozklad.org.ua/v2/groups/іо-71/lessons";
 
@@ -21,17 +30,28 @@ const Schedule = () => {
     { loader: false, schedule: {} },
     reducer
   );
-  console.log(loader, schedule);
+
+  const lessonsByDays = Boolean(Object.entries(schedule).length) && weekDaysUkr.map(day => schedule.data.filter(lesson => lesson.day_name === day));
+
 
   return (
-    <>
       <div>
-        {!loader && Object.entries(schedule).length
-          ? schedule.data.map((item) => <Lesson lesson={item} />)
-          : "Loading..."}
+        <table>
+          {!loader && lessonsByDays
+            ? ""
+            : "Loading..."}
+        {/* {!loader && Object.entries(schedule).length
+          ? schedule.data.map((item) => <ScheduleItem lesson={item} key={item.lesson_id}/>)
+          : "Loading..."} */}
+       </table>
       </div>
-    </>
   );
 };
+
+const ScheduleRow = ({items}) => {
+  return(
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  );
+}
 
 export default Schedule;

@@ -10,7 +10,7 @@ import { isFormValid } from "./formValidator";
 import { URL, PORT_AUTH } from "../../constants";
 
 const AuthForm = () => {
-  console.log("loadingauth");
+  console.log("reload");
   const { username, password } = useSelector((state) => state.auth);
   const isLogged = useSelector((state) => state.login.isLogged);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -29,7 +29,6 @@ const AuthForm = () => {
   const handleClick = (e) => {
     e.preventDefault();
     if (isFormValid(username, password)) {
-      localStorage.setItem("username", username);
       sendForm(dispatch, url + "/login", form, setLoading, setErrorMessage);
     } else {
       setErrorMessage("Input is not correct");
@@ -65,7 +64,12 @@ const AuthForm = () => {
             }}
           />
         </div>
-        <button className="submit-button" onClick={handleClick}>
+        <button
+          className="submit-button"
+          onClick={(e) => {
+            handleClick(e);
+          }}
+        >
           Login
         </button>
         <div className="error">

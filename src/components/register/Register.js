@@ -19,13 +19,11 @@ const Register = () => {
   };
 
   const isPasswordsSame = (pwd1, pwd2) => pwd1 && pwd1 === pwd2;
-  console.log(isPasswordsSame(password, confirmPassword));
 
   const handleClick = (e) => {
     e.preventDefault();
 
     if (isPasswordsSame(password, confirmPassword)) {
-      console.log("confirmed");
       dispatch({ type: "RESET" });
       sendForm(url, reqParams);
     } else {

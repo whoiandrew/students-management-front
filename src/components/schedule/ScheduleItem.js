@@ -1,4 +1,4 @@
-export const Lesson = ({lesson}) => {
+export const ScheduleItem = ({lesson}) => {
   const {lesson_name, day_name, teacher_name, time_start, time_end} = lesson;
   return(<div>
     <p>Lesson: {lesson_name}</p>
