@@ -10,7 +10,6 @@ import { isFormValid } from "./formValidator";
 import { URL, PORT_AUTH } from "../../constants";
 
 const AuthForm = () => {
-  console.log("reload");
   const { username, password } = useSelector((state) => state.auth);
   const isLogged = useSelector((state) => state.login.isLogged);
   const [errorMessage, setErrorMessage] = useState(null);

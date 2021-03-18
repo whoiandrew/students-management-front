@@ -1,57 +1,75 @@
-import React from "react";
-import useFetch from "../customHooks/useFetch";
-import { ScheduleItem } from "./ScheduleItem";
+import React, { useState } from "react";
+import useFetch from "../customHooks/useFetch/useFetch";
+import reducer from "../customHooks/useFetch/fetchReducer";
+import { weekDaysUkr } from "../../data/data";
+import ScheduleTable from "./ScheduleTable";
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "LOADING":
-      return { loader: true, schedule: {} };
-    case "LOADED":
-      return { loader: false, schedule: action.body };
-    default:
-      return state;
-  }
-};
+const MAX_LESSONS_NUMBER = 6;
 
-const weekDaysUkr = [
-  "Понеділок",
-  "Вівторок",
-  "Середа",
-  "Четвер",
-  "П'ятниця",
-  "Субота",
-];
 
 const Schedule = () => {
-  const url = "http://api.rozklad.org.ua/v2/groups/іо-71/lessons";
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  const { loader, schedule } = useFetch(
+
+  //use schedule url depending on user's role
+  const url = {
+    student: `http://api.rozklad.org.ua/v2/groups/${user.group}/lessons`,
+    teacher: `http://api.rozklad.org.ua/v2/teachers/${user._id}/lessons`
+  }[user.role];
+
+
+  const { loader, body } = useFetch(
     url,
-    { loader: false, schedule: {} },
+    { loader: false, body: {} },
     reducer
   );
 
-  const lessonsByDays = Boolean(Object.entries(schedule).length) && weekDaysUkr.map(day => schedule.data.filter(lesson => lesson.day_name === day));
+  //1st inner array - 1sts lessons for all days etc.
+  const lessonRowsByWeek = (weekNumber) => {
+    return Boolean(Object.entries(body).length) &&
+    new Array(MAX_LESSONS_NUMBER).fill(null).map((_, index) => {
+      return body.data.filter(
+        (lesson) =>
+          lesson.lesson_number === String(index + 1) &&
+          lesson.lesson_week === String(weekNumber)
+      );
+    });
+  }
 
+  //show 1st week by default
+  const [week, setWeek] = useState("1");
+
+  const radioHandler = (e) => {
+    const weekNumber = e.target.value;
+    setWeek(weekNumber);
+  }
 
   return (
-      <div>
-        <table>
-          {!loader && lessonsByDays
-            ? ""
-            : "Loading..."}
-        {/* {!loader && Object.entries(schedule).length
-          ? schedule.data.map((item) => <ScheduleItem lesson={item} key={item.lesson_id}/>)
-          : "Loading..."} */}
-       </table>
-      </div>
+    <div>
+      {!loader && lessonRowsByWeek(week) ? (
+        <ScheduleTable weekDays={weekDaysUkr} lessonRows={lessonRowsByWeek(week)} />
+      ) : (
+        "Loading..."
+      )}
+      { !loader && 
+        <RadioForm week={week} radioHandler={radioHandler} />
+      }
+    </div>
   );
 };
 
-const ScheduleRow = ({items}) => {
+const RadioForm = ({week, radioHandler}) => {
   return(
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <FormControl className="radio" component="fieldset">
+    <FormLabel component="legend">Week: </FormLabel>
+    <RadioGroup aria-label="week" name="week" value={week} onChange={radioHandler}>
+      <FormControlLabel value="1" control={<Radio />} label="1st week" />
+      <FormControlLabel value="2" control={<Radio />} label="2nd week" />
+    </RadioGroup>
+  </FormControl>
   );
 }
+
 
 export default Schedule;

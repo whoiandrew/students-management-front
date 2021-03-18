@@ -16,6 +16,26 @@ code {
     monospace;
 }
 
+table {
+  table-layout: fixed;
+  margin: 30px auto;
+}
+
+td > p {
+  font-size: 0.8rem;
+}
+
+th {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #eefbfb;
+}
+
+td{
+  padding: 20px;
+}
+
+
 .container {
   padding-top: 200px;
 }
@@ -112,3 +132,4 @@ code {
   padding-right: 2%;
   color: #12232e;
 }
+

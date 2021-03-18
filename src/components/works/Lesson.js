@@ -5,7 +5,7 @@ const Lesson = ({lessonName}) => {
   const lessonPath = lessonName.split(" ").join("_");
   return (
     <>
-      <p><Link to={`/works/${lessonPath}`} children= {lessonName} /></p>
+      <p><Link to={`/works/${lessonPath}`}>{lessonName}</Link></p>
     </>
   );
 }

@@ -1,5 +1,6 @@
 const sendForm = async (dispatch, url, params, loadingHook, errorHook) => {
   loadingHook(true);
+  console.log(url);
   try {
     const res = await fetch(url, params);
     const body = await res.json();
@@ -7,15 +8,14 @@ const sendForm = async (dispatch, url, params, loadingHook, errorHook) => {
 
     dispatch({ type: "USERNAME", value: "" });
     dispatch({ type: "PASSWORD", value: "" });
-  
-    const currentToken = body.accessToken;
-    const errorMessage = body.errorMessage;
 
-    if (currentToken) {
+    const { accessToken, errorMessage } = body;
+    const user = JSON.stringify(body.user);
+
+    if (accessToken && !errorMessage) {
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("user", user);
       dispatch({ type: "LOG_IN" });
-      localStorage.setItem("accessToken", currentToken);  
-      localStorage.setItem("user", JSON.stringify(body.user));
-
     }
     switch (errorMessage) {
       case "Request path contains unescaped characters":
