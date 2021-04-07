@@ -4,6 +4,7 @@ import reducer from "../customHooks/useFetch/fetchReducer";
 import { weekDaysUkr } from "../../data/data";
 import ScheduleTable from "./ScheduleTable";
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+import "../../index.css";
 
 const MAX_LESSONS_NUMBER = 6;
 
@@ -46,7 +47,7 @@ const Schedule = () => {
   }
 
   return (
-    <div>
+    <div className="page-wrapper">
       {!loader && lessonRowsByWeek(week) ? (
         <ScheduleTable weekDays={weekDaysUkr} lessonRows={lessonRowsByWeek(week)} />
       ) : (

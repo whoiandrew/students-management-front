@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import "../../index.css";
 
-const AddNote = ({ createNoteHandler }) => {
-  const [note, setNote] = useState({ title: "", body: "", status: "Not Started"});
+const noteInputDefaultState = { title: "", body: "", status: "Not Started" };
+
+const AddNote = ({ createNoteHandler, closeModalHandler }) => {
+  const [note, setNote] = useState(noteInputDefaultState);
 
   const handleInputs = (e) => {
     const { name, value } = e.target;
@@ -9,31 +12,50 @@ const AddNote = ({ createNoteHandler }) => {
   };
 
   return (
-    <div>
+    <div className="newnote-modal">
       <form
         onSubmit={(e) => {
           createNoteHandler(e, note);
+          setNote(noteInputDefaultState);
+          closeModalHandler();
+          
         }}
+        className="newmodal-form"
       >
-        <label htmlFor="status">Select task status:</label>
-        <select name="status" onChange={handleInputs}>
-          <option value="Not Started">Not Started</option>
-          <option value="In progress">In Progress</option>
-          <option value="Done">Done</option>
-        </select>
-        <input
-          name="title"
-          value={note.title}
-          onChange={handleInputs}
-          placeholder="Title"
-        />
-        <textarea
-          name="body"
-          value={note.body}
-          onChange={handleInputs}
-          placeholder="Note"
-        ></textarea>
-        <button type="submit">Add Note</button>
+        <div className="newnote-item">
+          <label htmlFor="status">Select task status: </label>
+          <select
+            className="newnote-select"
+            name="status"
+            onChange={handleInputs}
+          >
+            <option value="Not Started">Not Started</option>
+            <option value="In progress">In Progress</option>
+            <option value="Done">Done</option>
+          </select>
+        </div>
+        <div className="newnote-item">
+          <input
+            autoComplete="off"
+            name="title"
+            value={note.title}
+            onChange={handleInputs}
+            placeholder="Title"
+            className="newnote-input"
+          />
+        </div>
+        <div className="newnote-item">
+          <textarea
+            name="body"
+            value={note.body}
+            onChange={handleInputs}
+            placeholder="Note"
+            className="newnote-input"
+          ></textarea>
+        </div>
+        <button className="newnote-button newnote-item" type="submit">
+          Add Note
+        </button>
       </form>
     </div>
   );

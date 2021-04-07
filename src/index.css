@@ -2,17 +2,17 @@
 
 body {
   color: #eefbfb;
-  background: #12232e; 
+  background: #12232e;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -31,10 +31,9 @@ th {
   border-bottom: 1px solid #eefbfb;
 }
 
-td{
+td {
   padding: 20px;
 }
-
 
 .container {
   padding-top: 200px;
@@ -57,7 +56,6 @@ td{
   z-index: 1;
   position: static;
 }
-
 
 .input {
   color: #eefbfb;
@@ -133,3 +131,107 @@ td{
   color: #12232e;
 }
 
+.note-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 30px;
+  grid-row-gap: 1em;
+}
+
+.note {
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 #203647;
+  transition: 0.3s;
+  border-radius: 5px;
+  position: relative;
+}
+.note > p {
+  font-size: 0.8rem;
+}
+
+.newnote-modal {
+  justify-items: center;
+  color: #12232e;
+  border-radius: 20px;
+  outline: 0;
+  background-color: rgba(0, 124, 199, 1);
+  padding: 30px;
+}
+
+.newnote-item {
+  display: block;
+  color: #12232e;
+  margin: 30px;
+}
+
+textarea {
+  resize: none;
+}
+
+.newnote-input {
+  outline: 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #12232e;
+}
+
+.newnote-input::placeholder {
+  color: rgba(18, 35, 46, 0.7);
+}
+
+.newnote-button {
+  border: 0;
+  border-radius: 5px;
+  background-color: #4da8da !important;
+  display: block;
+  padding: 5px;
+  width: 30%;
+  margin: 0 auto;
+  background-color: #007cc7;
+}
+
+.newnote-select {
+  outline: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  color: #12232e;
+  border: 0;
+  margin: 1em;
+}
+
+.add-button {
+  outline: 0;
+  color: #12232e;
+  font-size: 2rem;
+  text-align: center;
+  margin: 20px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 100%;
+  background-color: #4da8da;
+}
+
+.remove-button {
+  margin: 10px;
+  position: absolute;
+  right: 0;
+  outline: 0;
+  border: 0;
+  border-radius: 5px;
+  color: #12232e;
+  background-color: rgba(255, 0, 0, 0.5);
+  bottom: 0px;
+  color: #12232e;
+}
+
+.page-wrapper {
+  margin: 20px;
+  padding: 20px;
+}
+
+.blured-background {
+  filter: blur(3px);
+}
