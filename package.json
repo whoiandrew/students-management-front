@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@projectstorm/react-diagrams": "^6.5.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
@@ -15,6 +17,7 @@
     "react-scripts": "4.0.2",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
+    "storm-react-diagrams": "^5.2.1",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
@@ -42,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "dependency-cruiser": "^10.0.1",
     "redux-devtools-extension": "^2.13.8"
   }
 }

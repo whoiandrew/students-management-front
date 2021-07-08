@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 const monthNames = [
   "January",
   "February",
@@ -22,5 +24,22 @@ export const parseISOStringDate = (dateISO) => {
     date.getHours(),
     date.getMinutes(),
   ];
-  return `${day} ${monthNames[month]} ${year} ${hours}:${minutes}`;
+
+  const fillToTwoNums = (dateValue) => {
+    if (typeof dateValue === "number") {
+      return dateValue.toString().length < 2
+        ? dateValue.toString().padStart(2, "0")
+        : dateValue;
+    }
+    return dateValue;
+  };
+
+  return `${day} ${monthNames[month]} ${year} ${fillToTwoNums(
+    hours
+  )}:${fillToTwoNums(minutes)}`;
+};
+
+export const useLastSegmentOfLocation = () => {
+  const location = useLocation().pathname.split("/");
+  return location[location.length - 1];
 };

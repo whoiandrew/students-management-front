@@ -66,7 +66,7 @@ td {
   background: transparent;
   border: 0;
   border-bottom: 1px solid #eefbfb;
-  padding-top: 10px;
+  padding-top: 10px;  
   font-size: 1.3rem;
 }
 
@@ -154,7 +154,7 @@ td {
   color: #12232e;
   border-radius: 20px;
   outline: 0;
-  background-color: rgba(0, 124, 199, 1);
+  background-color: #007cc7;
   padding: 30px;
 }
 
@@ -222,7 +222,7 @@ textarea {
   border: 0;
   border-radius: 5px;
   color: #12232e;
-  background-color: rgba(255, 0, 0, 0.5);
+  background-color: rgb(255, 38, 0);
   bottom: 0px;
   color: #12232e;
 }

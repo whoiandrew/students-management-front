@@ -1,4 +1,3 @@
-import { weekDaysUkr } from "../../data/data";
 import ScheduleRow from "./ScheduleRow";
 
 const ScheduleTable = ({ lessonRows, weekDays }) => {
@@ -17,7 +16,6 @@ const ScheduleTable = ({ lessonRows, weekDays }) => {
           return <ScheduleRow weekDays={weekDays} key={index} number={index + 1} rowLessons={row} />;
         })}
       </tbody>
-
     </table>
 
   );

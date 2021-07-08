@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     outline: "none",
-  }
+  },
 }));
 
 const Pinboard = () => {
@@ -32,7 +32,7 @@ const Pinboard = () => {
 
   const { loader, body } = useFetch(
     urlGetAll,
-    { loader: false, body: "" },
+    { loader: false, body: {} },
     reducer
   );
 
@@ -56,16 +56,12 @@ const Pinboard = () => {
   }, [body.notes]);
 
   const deleteNoteHandler = (id) => {
-    // setNotes(notes.filter((item) => item.id !== id));
     (async () => {
       const url = urlRemove(id);
       try {
         const res = await fetch(url);
         const respBody = await res.json();
         setNotes(notes.filter((item) => item._id !== id));
-        console.log(notes);
-        console.log(respBody);
-        console.log("requesting" + url);
       } catch (e) {
         console.log(e);
       }
@@ -93,7 +89,6 @@ const Pinboard = () => {
         const res = await fetch(urlAdd, params);
         const respBody = await res.json();
         setNotes([...notes, respBody.notes.doc]);
-        console.log("requesting" + urlAdd);
       } catch (e) {
         console.log(e);
       }
@@ -102,7 +97,7 @@ const Pinboard = () => {
 
   return (
     <div className={`page-wrapper ${open ? "blured-background" : ""}`}>
-      {loader && Boolean(Object.keys(body).length) ? (
+      {loader && !Array.isArray(notes) ? (
         <p>Loading...</p>
       ) : (
         <>
@@ -123,27 +118,34 @@ const Pinboard = () => {
           >
             <Fade in={open}>
               <div className={classes.paper}>
-                <AddNote closeModalHandler={handleClose} createNoteHandler={createNoteHandler} />
+                <AddNote
+                  closeModalHandler={handleClose}
+                  createNoteHandler={createNoteHandler}
+                />
               </div>
             </Fade>
           </Modal>
 
           <div className="note-wrapper">
             {notes &&
-              notes.map(({ _id, title, status, body, dateCreated }) => {
-                const id = _id;
-                return (
-                  <Note
-                    status={status}
-                    key={id}
-                    id={id}
-                    title={title}
-                    body={body}
-                    dateCreated={dateCreated}
-                    deleteNoteHandler={deleteNoteHandler}
-                  />
-                );
-              })}
+              notes
+                .sort(
+                  (a, b) => new Date(b.dateCreated) - new Date(a.dateCreated)
+                )
+                .map(({ _id, title, status, body, dateCreated }) => {
+                  const id = _id;
+                  return (
+                    <Note
+                      status={status}
+                      key={id}
+                      id={id}
+                      title={title}
+                      body={body}
+                      dateCreated={dateCreated}
+                      deleteNoteHandler={deleteNoteHandler}
+                    />
+                  );
+                })}
           </div>
         </>
       )}

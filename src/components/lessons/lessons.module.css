@@ -1,0 +1,48 @@
+.pageWrapper {
+  display: grid;
+  align-items: center;
+  padding: 100px;
+  justify-content: center;
+}
+
+.lesson {
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px 0px #203647;
+  text-decoration: none;
+  width: 100%;
+  color: #eefbfb;
+}
+
+.lesson:active {
+  box-shadow: none;
+  background-color:#121f29;
+}
+
+.lesson:hover {
+  box-shadow: 0 2px 8px 0px #007cc7;
+}
+
+.chooseInput{
+  margin: 40px auto;
+}
+
+.error {
+  color: red;
+}
+
+.sendFileButton{
+  width: 20vw;
+  margin: 40px auto;
+}
+
+.teacherWork {
+  width: 66vw;
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px 0px #203647;
+}
